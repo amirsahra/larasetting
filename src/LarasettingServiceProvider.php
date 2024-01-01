@@ -18,5 +18,8 @@ class LarasettingServiceProvider extends ServiceProvider
     {
         $this->app->bind('Larasetting', Larasetting::class);
         $this->mergeConfigFrom(__DIR__ . '/../configs/larasetting.php', 'larasetting');
+        // Load your helper file here
+        require_once __DIR__ . '/../helpers/larasettingHelper.php';
+
     }
 }
