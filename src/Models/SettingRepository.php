@@ -14,6 +14,8 @@ class SettingRepository
 
     public function create(array $data)
     {
+        if (is_null($data['is_active']))
+            $data['is_active'] = false;
         return $this->model->create($data);
     }
 
