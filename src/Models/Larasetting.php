@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method findOrFail($id)
  * @method create(array $data)
- * @method where(string $string, $key)
+ * @method where(array $data)
  */
 class Larasetting extends Model
 {
+    protected $table = 'settings';
     protected $fillable = [
         'key',
         'value',
