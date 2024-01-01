@@ -43,6 +43,6 @@ class SettingRepository
 
     public function search($key)
     {
-        $re = $this->model->where('key', $key)->first();
+        return $this->model->where('key', $key)->firstOrFail();
     }
 }
