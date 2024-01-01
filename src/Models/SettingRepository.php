@@ -2,7 +2,6 @@
 
 namespace Amirsahra\Larasetting\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 
 class SettingRepository
 {
@@ -37,9 +36,13 @@ class SettingRepository
         return $record->delete();
     }
 
-    public function all(): Collection
+    public function all($is_active = null)
     {
-        return $this->model->all();
+        $conditions = array();
+        if (!is_null($is_active))
+            $conditions['is_active'] = $is_active;
+
+        return $this->model->where($conditions)->get();
     }
 
     public function search($key, $is_active = null)
