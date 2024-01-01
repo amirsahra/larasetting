@@ -6,6 +6,7 @@ class Larasetting
 {
     public function say()
     {
-        return "Hi larasetting";
+        //return "Hi larasetting";
+        return config('larasetting.test');
     }
 }
