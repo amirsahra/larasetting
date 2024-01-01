@@ -3,6 +3,8 @@
 namespace Amirsahra\Larasetting\Models;
 
 
+use Amirsahra\Larasetting\Exceptions\SettingRecordNotFoundException;
+
 class SettingRepository
 {
     protected Larasetting $model;
@@ -16,28 +18,53 @@ class SettingRepository
     {
         if (is_null($data['is_active']))
             $data['is_active'] = false;
-        return $this->model->create($data);
+        return $this->model->create($data)->toArray();
     }
 
-    public function find($key,$is_active = null)
+    /**
+     * @throws SettingRecordNotFoundException
+     */
+    public function find($key, $is_active = null)
     {
         $conditions['key'] = $key;
         if (!is_null($is_active))
             $conditions['is_active'] = $is_active;
-        return $this->model->where($conditions)->findOrFail();
+
+        $result = $this->model->where($conditions)->first();
+
+        if (is_null($result))
+            throw new SettingRecordNotFoundException($key);
+        return $result->toArray();
     }
 
-    public function update($id, array $data)
+    /**
+     * @throws SettingRecordNotFoundException
+     */
+    public function update($key, array $data)
     {
-        $record = $this->model->findOrFail($id);
-        $record->update($data);
-        return $record;
+        $conditions['key'] = $key;
+        $result = $this->model->where($conditions)->first();
+
+        if (is_null($result))
+            throw new SettingRecordNotFoundException($key);
+
+        $result->update($data);
+        return $result->toArray();
     }
 
-    public function delete($id)
+    /**
+     * @throws SettingRecordNotFoundException
+     */
+    public function delete($key): bool
     {
-        $record = $this->model->findOrFail($id);
-        return $record->delete();
+        $conditions['key'] = $key;
+        $result = $this->model->where($conditions)->first();
+
+        if (is_null($result))
+            throw new SettingRecordNotFoundException($key);
+
+        $result->delete();
+        return true;
     }
 
     public function all($is_active = null)
@@ -46,7 +73,7 @@ class SettingRepository
         if (!is_null($is_active))
             $conditions['is_active'] = $is_active;
 
-        return $this->model->where($conditions)->get();
+        return $this->model->where($conditions)->get()->toArray();
     }
 
     public function search($key, $is_active = null)
@@ -55,6 +82,6 @@ class SettingRepository
         if (!is_null($is_active))
             $conditions['is_active'] = $is_active;
 
-        return $this->model->where($conditions)->get();
+        return $this->model->where($conditions)->get()->toArray();
     }
 }
