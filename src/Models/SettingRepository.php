@@ -18,9 +18,10 @@ class SettingRepository
         return $this->model->create($data);
     }
 
-    public function find($id)
+    public function find($key)
     {
-        return $this->model->findOrFail($id);
+        $conditions['key'] = $key;
+        return $this->model->where($conditions);
     }
 
     public function update($id, array $data)
@@ -41,8 +42,12 @@ class SettingRepository
         return $this->model->all();
     }
 
-    public function search($key)
+    public function search($key, $is_active = null)
     {
-        return $this->model->where('key', $key)->firstOrFail();
+        $conditions['key'] = $key;
+        if (!is_null($is_active))
+            $conditions['is_active'] = $is_active;
+
+        return $this->model->where($conditions)->get();
     }
 }
