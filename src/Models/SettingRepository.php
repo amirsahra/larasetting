@@ -40,4 +40,9 @@ class SettingRepository
     {
         return $this->model->all();
     }
+
+    public function search($key)
+    {
+        $re = $this->model->where('key', $key)->first();
+    }
 }
