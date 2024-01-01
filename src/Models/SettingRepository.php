@@ -17,10 +17,12 @@ class SettingRepository
         return $this->model->create($data);
     }
 
-    public function find($key)
+    public function find($key,$is_active = null)
     {
         $conditions['key'] = $key;
-        return $this->model->where($conditions);
+        if (!is_null($is_active))
+            $conditions['is_active'] = $is_active;
+        return $this->model->where($conditions)->findOrFail();
     }
 
     public function update($id, array $data)
