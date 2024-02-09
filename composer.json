@@ -5,7 +5,10 @@
     "autoload": {
         "psr-4": {
             "Amirsahra\\Larasetting\\": "src/"
-        }
+        },
+        "files": [
+            "helpers/larasettingHelper.php"
+        ]
     },
     "authors": [
         {
@@ -14,5 +17,15 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Amirsahra\\Larasetting\\LarasettingServiceProvider"
+            ],
+            "aliases": {
+                "larasettinHelper": "helpers/larasettingHelper.php"
+            }
+        }
+    }
 }
