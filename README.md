@@ -10,7 +10,7 @@ Larasetting is a simple and efficient package for managing settings in Laravel a
 - Database-backed persistence: Settings are securely stored in a dedicated database table, ensuring data integrity and persistence across application restarts.
 
 ## Installation
-Install the package: Use Composer to install the package:
+Install the package : Use Composer to install the package:
 
 ```sh
 composer require amirsahra/larasetting
